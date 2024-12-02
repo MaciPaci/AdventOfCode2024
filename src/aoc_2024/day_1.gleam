@@ -15,9 +15,8 @@ pub fn pt_1(input: String) {
 
 pub fn pt_2(input: String) {
   let input_list = parse_input(input)
-  let two_lists = read_from_list(input_list, list.new(), list.new())
-  let left = two_lists.0 |> set.from_list() |> set.to_list()
-  let right = list.sort(two_lists.1, int.compare)
+  let #(left, right) = read_from_list(input_list, list.new(), list.new())
+  let left = left |> set.from_list() |> set.to_list()
   let result = count_numbers(left, right, dict.new())
   result |> dict.fold(0, fn(acc, key, val) {acc + key * val})
 }
