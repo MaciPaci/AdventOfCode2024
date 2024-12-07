@@ -2,6 +2,8 @@ import gleam/int
 import gleam/result
 import gleam/list
 import gleam/string
+import utils/tuple
+import utils/lister
 
 pub fn parse(input: String) -> List(#(Int, List(Int))) {
   input
@@ -19,8 +21,8 @@ pub fn parse(input: String) -> List(#(Int, List(Int))) {
 pub fn pt_1(input: List(#(Int, List(Int)))) {
   input
   |> list.filter(solve_equation)
-  |> list.map(fn(el) {el.0})
-  |> list.fold(0, fn(acc, x) { acc + x })
+  |> list.map(tuple.first)
+  |> lister.sum
 }
 
 fn solve_equation(record: #(Int, List(Int))) -> Bool {
@@ -45,8 +47,8 @@ fn solve_combinations(result: Int, acc: Int, parameters: List(Int)) -> Bool {
 pub fn pt_2(input: List(#(Int, List(Int)))) {
   input
   |> list.filter(solve_equation_pt2)
-  |> list.map(fn(el) {el.0})
-  |> list.fold(0, fn(acc, x) { acc + x })
+  |> list.map(tuple.first)
+  |> lister.sum
 }
 
 fn solve_equation_pt2(record: #(Int, List(Int))) -> Bool {
