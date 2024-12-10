@@ -73,8 +73,6 @@ Because the topmost A-frequency antenna overlaps with a 0-frequency antinode, th
 
 Calculate the impact of the signal. How many unique locations within the bounds of the map contain an antinode?
 
-Your puzzle answer was 278.
-
 --- Part Two ---
 Watching over your shoulder as you work, one of The Historians asks if you took the effects of resonant harmonics into your calculations.
 
