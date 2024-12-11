@@ -18,6 +18,7 @@ gladvent = ">= 2.0.2 and < 3.0.0"
 simplifile = ">= 2.2.0 and < 3.0.0"
 gleam_regexp = ">= 1.0.0 and < 2.0.0"
 gleam_otp = ">= 0.14.1 and < 1.0.0"
+gleam_yielder = ">= 1.1.0 and < 2.0.0"
 
 [dev-dependencies]
 gleeunit = ">= 1.0.0 and < 2.0.0"
@@ -50,7 +51,10 @@ pt_2 = 2188
 pt_1 = 663613490587
 pt_2 = 110365987435001
 
-
 [gladvent.2024.8]
 pt_1 = 278
 pt_2 = 1067
+
+[gladvent.2024.9]
+pt_1 = 6353658451014
+pt_2 = 6382582136592
