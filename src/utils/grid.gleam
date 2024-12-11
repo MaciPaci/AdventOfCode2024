@@ -3,34 +3,40 @@ import utils/parser
 import gleam/list
 import gleam/dict.{type Dict}
 
-pub fn to_grid(input: List(List(String)), row: Int, col: Int, grid: Dict(#(Int, Int), String)) -> Dict(#(Int, Int), String) {
+pub type Point {
+  Point(x: Int, y: Int)
+}
+
+pub type Grid(a) = Dict(Point, a)
+
+pub fn to_grid(input: List(List(String)), row: Int, col: Int, grid: Grid(String)) -> Grid(String) {
   case input {
     [first, ..rest] -> to_grid(rest, row+1, 0, add_row_to_grid(first, row, col, grid))
     _ -> grid
   }
 }
 
-fn add_row_to_grid(input: List(String), row: Int, col: Int, grid: Dict(#(Int, Int), String)) {
+fn add_row_to_grid(input: List(String), row: Int, col: Int, grid: Grid(String)) {
   case input {
-    [first, ..rest] -> add_row_to_grid(rest, row, col + 1, grid |> dict.insert(#(row, col), first))
+    [first, ..rest] -> add_row_to_grid(rest, row, col + 1, grid |> dict.insert(Point(row, col), first))
     _ -> grid
   }
 }
 
-pub fn get_max_grid_pos(grid: Dict(#(Int, Int), String)) -> #(Int, Int) {
-  let acc = #(0, 0)
+pub fn get_max_grid_pos(grid: Grid(String)) -> Point {
+  let acc = Point(0, 0)
   dict.keys(grid)
   |> list.fold(acc, fn(acc, el) {
-    let #(row, col) = el
-    case row > acc.0, col > acc.1 {
-      True, _ -> #(row, acc.1)
-      _, True -> #(acc.0, col)
+    let Point(row, col) = el
+    case row > acc.x, col > acc.y {
+      True, _ -> Point(row, acc.y)
+      _, True -> Point(acc.x, col)
       _, _ -> acc
     }
   })
 }
 
-pub fn get_max_pos(input: String) -> #(Int, Int) {
+pub fn get_max_pos(input: String) -> Point {
   input
   |> parser.parse_lines()
   |> list.map(fn(line) {

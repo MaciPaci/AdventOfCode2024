@@ -1,16 +1,16 @@
 import gleam/set.{type Set}
 import gleam/result
-import gleam/dict.{type Dict}
+import gleam/dict
 import gleam/list
 import gleam/string
-import utils/grid
+import utils/grid.{type Grid, type Point, Point}
 import utils/parser
 import utils/directions.{type Direction}
 
 pub fn pt_1(input: String) {
   let input_lines = parser.parse_lines(input) |> list.map(fn(el) {string.to_graphemes(el)})
   let grid = grid.to_grid(input_lines, 0, 0, dict.new())
-  let starting_position = grid |> dict.filter(fn(_, v) {v == "^"}) |> dict.keys() |> list.first() |> result.unwrap(#(0, 0))
+  let starting_position = grid |> dict.filter(fn(_, v) {v == "^"}) |> dict.keys() |> list.first() |> result.unwrap(Point(0, 0))
 
   move_guard(grid, starting_position, directions.North, [])
   |> list.unique()
@@ -18,11 +18,11 @@ pub fn pt_1(input: String) {
 }
 
 fn move_guard(
-  grid: Dict(#(Int, Int), String),
-  position: #(Int, Int),
+  grid: Grid(String),
+  position: Point,
   direction: Direction,
-  visited: List(#(Int, Int))
-  ) -> List(#(Int, Int))
+  visited: List(Point)
+  ) -> List(Point)
 {
   let new_visited = list.append(visited, [position])
   let next_position = grid |> dict.get(directions.step(direction, position)) |> result.unwrap("")
@@ -40,13 +40,13 @@ fn move_guard(
 pub fn pt_2(input: String) {
   let input_lines = parser.parse_lines(input) |> list.map(fn(el) {string.to_graphemes(el)})
   let grid = grid.to_grid(input_lines, 0, 0, dict.new())
-  let starting_position = grid |> dict.filter(fn(_, v) {v == "^"}) |> dict.keys() |> list.first() |> result.unwrap(#(0, 0))
+  let starting_position = grid |> dict.filter(fn(_, v) {v == "^"}) |> dict.keys() |> list.first() |> result.unwrap(Point(0, 0))
 
   let guard_path = move_guard(grid, starting_position, directions.North, []) |> list.unique()
   check_obstacles(grid, guard_path, starting_position, 0)
 }
 
-fn check_obstacles(grid: Dict(#(Int, Int), String), potential_obstacles: List(#(Int, Int)), position: #(Int, Int), sum: Int) -> Int {
+fn check_obstacles(grid: Grid(String), potential_obstacles: List(Point), position: Point, sum: Int) -> Int {
   case potential_obstacles {
     [] -> sum
     [first, ..rest] -> {
@@ -63,9 +63,9 @@ fn check_obstacles(grid: Dict(#(Int, Int), String), potential_obstacles: List(#(
 }
 
 fn is_guard_moving_in_loop(
-  grid: Dict(#(Int, Int), String),
-  visited: Set(#(Direction, #(Int, Int))),
-  position: #(Int, Int),
+  grid: Grid(String),
+  visited: Set(#(Direction, Point)),
+  position: Point,
   direction: Direction,
   ) -> Bool
 {

@@ -1,3 +1,5 @@
+import utils/grid.{type Point,Point}
+
 pub type Direction {
   North
   East
@@ -22,16 +24,16 @@ pub fn rotate_90_degrees_right(dir: Direction) -> Direction {
   }
 }
 
-pub fn step(dir: Direction, pos: #(Int, Int)) -> #(Int, Int) {
-  let #(x, y) = pos
+pub fn step(dir: Direction, pos: Point) -> Point {
+  let Point(x, y) = pos
   case dir {
-    North -> #(x - 1, y)
-    East -> #(x, y + 1)
-    South -> #(x + 1, y)
-    West -> #(x, y - 1)
-    NorthWest -> #(x - 1, y - 1)
-    NorthEast -> #(x - 1, y + 1)
-    SouthEast -> #(x + 1, y + 1)
-    SouthWest -> #(x + 1, y - 1)
+    North -> Point(x - 1, y)
+    East -> Point(x, y + 1)
+    South -> Point(x + 1, y)
+    West -> Point(x, y - 1)
+    NorthWest -> Point(x - 1, y - 1)
+    NorthEast -> Point(x - 1, y + 1)
+    SouthEast -> Point(x + 1, y + 1)
+    SouthWest -> Point(x + 1, y - 1)
   }
 }
