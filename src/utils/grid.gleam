@@ -9,21 +9,21 @@ pub type Point {
 
 pub type Grid(a) = Dict(Point, a)
 
-pub fn to_grid(input: List(List(String)), row: Int, col: Int, grid: Grid(String)) -> Grid(String) {
+pub fn to_grid(input: List(List(a)), row: Int, col: Int, grid: Grid(a)) -> Grid(a) {
   case input {
     [first, ..rest] -> to_grid(rest, row+1, 0, add_row_to_grid(first, row, col, grid))
     _ -> grid
   }
 }
 
-fn add_row_to_grid(input: List(String), row: Int, col: Int, grid: Grid(String)) {
+fn add_row_to_grid(input: List(a), row: Int, col: Int, grid: Grid(a)) {
   case input {
     [first, ..rest] -> add_row_to_grid(rest, row, col + 1, grid |> dict.insert(Point(row, col), first))
     _ -> grid
   }
 }
 
-pub fn get_max_grid_pos(grid: Grid(String)) -> Point {
+pub fn get_max_grid_pos(grid: Grid(a)) -> Point {
   let acc = Point(0, 0)
   dict.keys(grid)
   |> list.fold(acc, fn(acc, el) {
