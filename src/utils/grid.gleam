@@ -45,3 +45,11 @@ pub fn get_max_pos(input: String) -> Point {
   |> to_grid(0, 0, dict.new())
   |> get_max_grid_pos()
 }
+
+pub fn find_in_grid(grid: Grid(a), looking_for: a) -> List(Point) {
+  grid
+  |> dict.filter(fn(_, el) {
+    el == looking_for
+  })
+  |> dict.keys
+}
